@@ -10,6 +10,24 @@ WAITING_TIME = 1000
 LOADING_TIME = 3000
 STATE_TIME = 40000
 
+def login(driver, user, pwd):
+    driver.get("https://www.google.ca/")
+    t.sleep(5)
+    driver.implicitly_wait(WAITING_TIME)
+    driver.find_element_by_id("gb_70").click()
+    t.sleep(5)
+    driver.find_element_by_id("identifierId").send_keys(user)
+    t.sleep(5)
+    driver.find_element_by_id("identifierNext").click()
+
+    t.sleep(5)
+    driver.find_element_by_name("password").send_keys(pwd)
+    t.sleep(5)
+    driver.find_element_by_id("passwordNext").click()
+    t.sleep(5)
+    # driver.implicitly_wait(WAITING_TIME)
+    # assert "Log into Facebook" in driver.title
+
 def isAdsExist(element):
     flag = True
     try:
@@ -81,10 +99,14 @@ def improve_seo_by_keyword(driver,keyword):
 
 
 if __name__ == "__main__":
+    user = "h"
+    pwd = "hw"
+
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
 
     driver = webdriver.Chrome('./chromedriver.exe', chrome_options=options)
+    login(driver,user,pwd)
 
     try:
         for i in range(10):
@@ -94,22 +116,24 @@ if __name__ == "__main__":
             print(i)
             x = datetime.now()
             print(x.strftime("%X"))
+
             driver.get("https://www.google.ca/")
             driver.implicitly_wait(WAITING_TIME)
-            improve_seo_by_keyword(driver,"ubreakifix")
+            break_ad_keyword(driver, "ubreakifix")
+            # improve_seo_by_keyword(driver,"ubreakifix")
 
             t.sleep(10)
             # driver.get("https://www.google.ca/")
             # driver.implicitly_wait(WAITING_TIME)
             # break_ad_keyword(driver,"u break i fix montreal")
 
-            driver.get("https://www.google.ca/")
-            driver.implicitly_wait(WAITING_TIME)
-            improve_seo_by_keyword(driver,"u break i fix montreal")
-            t.sleep(10)
+            # driver.get("https://www.google.ca/")
+            # driver.implicitly_wait(WAITING_TIME)
+            # improve_seo_by_keyword(driver,"u break i fix montreal")
+            # t.sleep(10)
     finally:
         driver.close()
 
-    # driver.close()
+    driver.close()
 
     driver.quit()
